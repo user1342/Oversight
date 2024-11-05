@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Evasion Analysis</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .card-panel {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .insights-grid {
+            display: flex;
+            gap: 1rem;
+            margin-top: 20px;
+        }
+        .insight-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card-panel">
+            <h5>Response Evasion Analysis</h5>
+            <p id="summary"></p>
+            <div class="insights-grid">
+                <div class="insight-card" id="responseEvasion">Response: <span></span></div>
+                <div class="insight-card" id="totalLayers">Total Layers: <span></span></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modelInfo = {{ model_info | tojson }};
+            const responseEvasion = modelInfo.response;
+            const totalLayers = modelInfo.total_layers;
+            const maxAttentionLayer = modelInfo.max_attention_layer;
+            const averageAttention = modelInfo.average_attention;
+
+            document.getElementById('responseEvasion').querySelector('span').textContent = responseEvasion;
+            document.getElementById('totalLayers').querySelector('span').textContent = totalLayers;
+
+            const summary = `
+                This is designed to test and analyse how a language model responds to various prompts that aim to circumvent its expected behavior. 
+                This module evaluates the model's robustness against response evasion techniques, context manipulation, and language ambiguity exploitation. 
+                It provides insights into the model's ability to handle adversarial inputs and maintain its integrity.
+            `;
+            document.getElementById('summary').textContent = summary;
+        });
+    </script>
+</body>
+</html>

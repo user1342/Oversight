@@ -1,0 +1,10 @@
+{
+    "name": "Response Evasion Analysis",
+    "size": "medium",
+    "data": "A module for analyzing response evasion techniques in LLMs",
+    "hidden": false,
+    "loader": "HuggingFaceLoader",
+    "priority": 3,
+    "subheading": "Security",
+    "icon": "security"
+}

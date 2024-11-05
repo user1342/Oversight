@@ -1,0 +1,10 @@
+{
+    "name": "Prompt Fuzzing Engine",
+    "size": "medium",
+    "data": "A module for performing advanced prompt fuzzing to test various random and semi-random prompt modifications. It aims to identify unexpected or undesired model behaviors by introducing changing contexts or topics mid-prompt.",
+    "hidden": false,
+    "loader": "HuggingFaceLoader",
+    "priority": 3,
+    "subheading": "Security",
+    "icon": "bug_report"
+}

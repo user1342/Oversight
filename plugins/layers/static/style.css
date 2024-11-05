@@ -1,0 +1,576 @@
+/* Container styling for the cards */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 3rem 2rem;
+    font-family: 'Roboto', sans-serif;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-top: 1rem;
+}
+
+/* Basic styling for the card component */
+.card {
+    background: #ffffff;
+    border-radius: 12px; /* Increased border-radius for a more modern look */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    padding: 0;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.card:hover {
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2); /* Softer shadow on hover */
+    transform: translateY(-5px);
+}
+
+/* Card size variations */
+.card.small {
+    width: 320px;
+    height: 320px;
+}
+
+.card.medium {
+    width: 640px;
+    height: 320px;
+}
+
+.card.large {
+    width: 640px;
+    height: 640px;
+}
+
+/* Styling for the embedded iframe */
+.card iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Ensure the banner is hidden by default */
+.material-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #6200ea; /* Material Design primary color */
+    color: white; /* White text for contrast */
+    padding: 12px; /* Increased padding for a more modern look */
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 12px 12px 0 0; /* Match card border-radius */
+    opacity: 0; /* Set to 0 to make it hidden by default */
+    transform: translateY(-100%); /* Place it outside the visible area */
+    z-index: 10;
+    display: flex; /* Use flexbox to align items */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Add transition for smooth appearance */
+    gap: 8px; /* Add gap between icon and text */
+}
+
+/* Show the banner on hover */
+.card:hover .material-banner {
+    opacity: 1;
+    transform: translateY(0); /* Place it in the visible area */
+}
+
+/* Style for banner text */
+.banner-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Roboto', sans-serif; /* Use Roboto font for a modern look */
+}
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* Center vertically and horizontally */
+    padding: 2rem;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto', sans-serif;
+    position: relative;  /* Add this line */
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    font-weight: 500;
+}
+
+.modal-content p {
+    margin-bottom: 1rem;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-content button {
+    background-color: #6200ea;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #3700b3;
+}
+
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: rgba(0, 0, 0, 0.54);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    padding: 8px;
+}
+
+.modal-close:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.modal-close .material-icons {
+    font-size: 24px;
+}
+
+/* Spinner styles */
+.spinner {
+    border: 12px solid #f3f3f3; /* Light gray */
+    border-top: 12px solid #6200ea; /* Material Design primary color */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto; /* Center horizontally */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Floating Action Button (FAB) container */
+.fab-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 1000;
+}
+
+.fab {
+    width: 56px;
+    height: 56px;
+    background-color: #6200ea;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fab:hover {
+    background-color: #3700b3;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.fab i.material-icons {
+    font-size: 24px;
+}
+
+/* Remove old help-icon related styles */
+
+/* Tooltip styling moved to plugin icon */
+.plugin-icon {
+    font-size: 20px; /* Adjust icon size */
+    cursor: pointer;
+}
+
+.plugin-icon[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 1000;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    font-size: 0.875rem;
+}
+
+/* Subheading styles */
+.subheading {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: #1f1f1f;
+    position: relative;
+    margin: 0 auto;
+    padding: 0.5rem 0 1rem 0;
+    letter-spacing: -0.022em;
+    line-height: 2.25rem;
+    text-align: center;
+    width: fit-content;
+}
+
+.subheading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 2px;
+    background-color: #6200ea;
+    border-radius: 2px;
+}
+
+/* Section container for each subheading group */
+.section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+/* Container for cards under each subheading */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 0.5rem 0;
+    justify-content: center;
+}
+
+/* Page break styles */
+.page-break {
+    border: none;
+    height: 1px;
+    background-color: #e0e0e0;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+/* App Banner */
+.app-banner {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 1rem 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+}
+
+/* Banner content layout updates */
+.banner-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+}
+
+.app-title {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #6200ea 0%, #3700b3 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.app-subtitle {
+    color: #5f6368;
+    font-size: 0.875rem;
+    margin: 0;
+    font-weight: 400;
+    opacity: 0.87;
+}
+
+/* Navigation Container */
+.nav-container {
+    position: relative;
+    margin-left: auto;
+}
+
+/* Updated dropdown button styles */
+.dropdown-button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #5f6368;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.dropdown-button:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
+}
+
+.dropdown-button.active {
+    background-color: #f1f3f4;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3);
+}
+
+.dropdown-content {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(60, 64, 67, 0.3);
+    padding: 8px 0;
+    min-width: 180px;
+}
+
+.dropdown-item {
+    color: #3c4043;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f3f4;
+    color: #1a73e8;
+}
+
+.dropdown-button .button-text {
+    letter-spacing: 0.01em;
+}
+
+.dropdown-button .material-icons {
+    font-size: 1.125rem;
+    opacity: 0.9;
+}
+
+.dropdown-button.active .material-icons {
+    transform: rotate(180deg);
+}
+
+/* Enhanced dropdown content styling */
+.dropdown-content {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0; /* Change from left: 0 to right: 0 */
+    min-width: 240px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dropdown-content.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: block;
+    padding: 0.875rem 1.25rem;
+    color: #1f1f1f;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.dropdown-item:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.dropdown-item:last-child:after {
+    display: none;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(98, 0, 234, 0.04);
+    color: #6200ea;
+    padding-left: 1.5rem;
+}
+
+.dropdown-item:first-child {
+    border-radius: 8px 8px 0 0;
+}
+
+.dropdown-item:last-child {
+    border-radius: 0 0 8px 8px;
+}
+
+/* Disabled FAB styling - update */
+.fab.disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+    box-shadow: none;
+    pointer-events: none; /* Add this to block all interactions */
+}
+
+.fab.disabled:hover {
+    background-color: #e0e0e0;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Tooltip for disabled state */
+.fab.disabled:hover::before {
+    content: attr(title);
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 12px;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Graph container styles */
+.graph-container {
+    height: 400px;
+    margin: 20px 0;
+    position: relative;
+}
+
+/* Insights styles */
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.insight-card {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.insight-card h6 {
+    color: #5f6368;
+    margin: 0 0 0.5rem 0;
+    font-size: 0.875rem;
+}
+
+.insight-card p {
+    color: #202124;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.insight-details {
+    color: #5f6368;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* JSON viewer styles */
+#jsonViewer {
+    background: #202124;
+    color: #e8eaed;
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.875rem;
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+#toggleJSON {
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    color: #5f6368;
+}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2196F3;
+            --secondary: #FFC107;
+            --danger: #f44336;
+            --success: #4CAF50;
+            --background: #fafafa;
+            --surface: #ffffff;
+            --text-primary: rgba(0, 0, 0, 0.87);
+            --text-secondary: rgba(0, 0, 0, 0.54);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--background);
+            margin: 0;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .container {
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 16px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-top: 0;
+        }
+
+        .analysis-section {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 16px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .analysis-section:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .token-card {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .score-bar {
+            height: 4px;
+            background: #e0e0e0;
+            margin-top: 5px;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: var(--success);
+        }
+
+        .variations-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .variation-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary);
+        }
+
+        .vulnerability-section {
+            background: var(--surface);
+            color: var(--text-primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .risk-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .risk-critical { background: var(--danger); }
+        .risk-high { background: #ff8800; }
+        .risk-medium { background: #ffbb33; }
+        .risk-low { background: var(--success); }
+
+        .analysis-details {
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            color: var(--text-primary);
+        }
+
+        .vulnerability-category h3 {
+            color: var(--text-primary);
+        }
+
+        .vector-category h3 {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="analysis-section">
+            <h2>Token Analysis</h2>
+            <div class="token-grid" id="tokenGrid">
+                {% if results and results.token_analysis %}
+                    {% for token in results.token_analysis %}
+                    <div class="token-card">
+                        <div>{{ token.token }}</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: {{ token.confidence_score * 100 }}%"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="vulnerability-section">
+            <h2>Token-Level Analysis</h2>
+            <div class="token-grid">
+                {% for token in results.token_analysis %}
+                <div class="token-card">
+                    <div class="token-header">
+                        <span>{{ token.token }}</span>
+                        <span class="risk-indicator risk-{{ token.potential_risk.level.lower() }}">
+                            {{ token.potential_risk.level }}
+                        </span>
+                    </div>
+                    <div class="analysis-details">
+                        <div>Confidence: {{ "%.3f"|format(token.confidence_score) }}</div>
+                        <div>Attention: {{ "%.3f"|format(token.attention_influence) }}</div>
+                        <div>Impact: {{ "%.3f"|format(token.gradient_impact) }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="vulnerability-section">
+            <h2>Model Vulnerabilities</h2>
+            <div class="analysis-details">
+                {% for category, details in results.model_vulnerabilities.items() %}
+                <div class="vulnerability-category">
+                    <h3>{{ category|title }}</h3>
+                    <pre>{{ details|tojson(indent=2) }}</pre>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add real-time analysis functionality
+            const analyzeText = async (text) => {
+                try {
+                    const response = await fetch('/adversarial/analyze', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ text }),
+                    });
+                    return await response.json();
+                } catch (error) {
+                    console.error('Analysis failed:', error);
+                    return null;
+                }
+            };
+
+            // Update UI with new results
+            const updateUI = (results) => {
+                if (!results) return;
+                
+                // Update token grid using correct attribute names
+                const tokenGrid = document.getElementById('tokenGrid');
+                tokenGrid.innerHTML = results.token_analysis.map(token => `
+                    <div class="token-card">
+                        <div>${token.token}</div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${token.confidence_score * 100}%"></div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Update variations list
+                const variationsList = document.querySelector('.variations-list');
+                if (results.attack_vectors) {
+                    const variations = [];
+                    for (const category in results.attack_vectors) {
+                        const categoryVectors = results.attack_vectors[category];
+                        for (const group in categoryVectors) {
+                            categoryVectors[group].forEach(vector => {
+                                variations.push(`
+                                    <li class="variation-item">
+                                        <div>${vector.prompt}</div>
+                                        <div class="analysis-details">
+                                            Effectiveness: ${vector.effectiveness}
+                                            Success Rate: ${vector.success_rate}
+                                        </div>
+                                    </li>
+                                `);
+                            });
+                        }
+                    }
+                    variationsList.innerHTML = variations.join('');
+                }
+            };
+        });
+    </script>
+</body>
+</html>

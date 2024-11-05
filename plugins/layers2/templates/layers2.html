@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Dashboard</title>
+    <!-- Import Materialize CSS and Google Material Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet"> <!-- Updated CSS link -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.0.0"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .card-panel {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-panel h5 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        .material-icons {
+            margin-right: 8px;
+            color: #42a5f5;
+        }
+        .code-editor {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+        }
+        .tooltip {
+            position: relative;
+        }
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #424242;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 0.9em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="model-info" class="card-panel">
+            <h5><i class="material-icons">info</i>Model Info</h5>
+            <canvas id="activation-chart"></canvas>
+            <div id="insights" class="card-panel">
+                <h5>Insights</h5>
+                <ul id="insights-list"></ul>
+            </div>
+
+            <pre id="model-info-content" class="code-editor tooltip hidden" data-tooltip="Details of the selected model"></pre>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Materialize select
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+
+            // Display model info with a default empty object if undefined
+            const modelInfo = {{ model_info | default({}) | tojson }};
+            document.getElementById('model-info-content').textContent = JSON.stringify(modelInfo, null, 2);
+
+            const ctx = document.getElementById('activation-chart').getContext('2d');
+            const activationData = modelInfo.activation_data || [];
+            const data = activationData.flatMap((layer, layerIndex) =>
+                layer.activations.map((value, neuronIndex) => ({
+                    x: layerIndex,
+                    y: neuronIndex,
+                    v: value
+                }))
+            );
+
+            new Chart(ctx, {
+                type: 'matrix',
+                data: {
+                    datasets: [{
+                        label: 'Activation Values',
+                        data: data,
+                        backgroundColor: (ctx) => {
+                            const value = ctx.dataset.data[ctx.dataIndex].v;
+                            const alpha = (value - Math.min(...data.map(d => d.v))) / (Math.max(...data.map(d => d.v)) - Math.min(...data.map(d => d.v)));
+                            return `rgba(0, 123, 255, ${alpha})`;
+                        },
+                        width: ({ chart }) => (chart.chartArea || {}).width / activationData.length,
+                        height: ({ chart }) => (chart.chartArea || {}).height / activationData[0].activations.length
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Layers'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Neurons'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    const item = tooltipItem.raw;
+                                    return `Layer: ${item.x}, Neuron: ${item.y}, Value: ${item.v}`;
+                                }
+                            }
+                        },
+                        zoom: {
+                            zoom: {
+                                wheel: {
+                                    enabled: true
+                                },
+                                pinch: {
+                                    enabled: true
+                                },
+                                mode: 'xy'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Display insights
+            const insightsList = document.getElementById('insights-list');
+            activationData.forEach(layer => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Layer ${layer.layer}: Mean = ${layer.mean.toFixed(4)}, Std = ${layer.std.toFixed(4)}, Min = ${layer.min.toFixed(4)}, Max = ${layer.max.toFixed(4)}`;
+                insightsList.appendChild(listItem);
+            });
+        });
+    </script>
+    <!-- Import Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/static/material.js"></script> <!-- Updated JS link -->
+</body>
+</html>
