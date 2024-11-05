@@ -102,6 +102,11 @@ Ensure your plugin’s configuration is added to the config.json file in your pl
 ## Step 5: Register Your Plugin
 Your plugin will be automatically discovered by Oversight. Just restart the application, and your plugin should be ready to use!
 
+<p align="center">
+    <img width=100% src="demo.gif">
+  </a>
+</p>
+
 # Example Plugin Usage
 A plugin like Adversarial Analysis (from adversarial.py) analyzes vulnerabilities and generates adversarial prompts. Here’s a usage example:
 
