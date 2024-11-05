@@ -107,14 +107,5 @@ Ensure your plugin’s configuration is added to the config.json file in your pl
 ## Step 5: Register Your Plugin
 Your plugin will be automatically discovered by Oversight. Just restart the application, and your plugin should be ready to use!
 
-# Example Plugin Usage
-A plugin like Adversarial Analysis (from adversarial.py) analyzes vulnerabilities and generates adversarial prompts. Here’s a usage example:
-
-```
-plugin = AdversarialPlugin(app, session_state)
-result = plugin.analyze_text("Sample input text for analysis.")
-print(result)  # Output includes token significance and potential attack vectors
-```
-
 # Contributing 🤝
 We welcome contributions! Feel free to fork the repository, make changes, and submit a pull request. Contributions can include bug fixes, new features, or improvements to documentation.
