@@ -13,6 +13,11 @@ Welcome to **Oversight**! This tool allows reverse engineering and in-depth anal
 - **User-Friendly Interface**: Intuitive web interface powered by Flask.
 - **Detailed Reports**: Generate and download comprehensive reports.
 
+<p align="center">
+    <img width=50% src="demo.gif">
+  </a>
+</p>
+
 ## Installation 🛠️
 
 ### Requirements
@@ -101,11 +106,6 @@ Ensure your plugin’s configuration is added to the config.json file in your pl
 
 ## Step 5: Register Your Plugin
 Your plugin will be automatically discovered by Oversight. Just restart the application, and your plugin should be ready to use!
-
-<p align="center">
-    <img width=100% src="demo.gif">
-  </a>
-</p>
 
 # Example Plugin Usage
 A plugin like Adversarial Analysis (from adversarial.py) analyzes vulnerabilities and generates adversarial prompts. Here’s a usage example:
