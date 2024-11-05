@@ -1,4 +1,9 @@
-# Oversight: The LLM Disassembler 🕵️‍♂️🔍
+<p align="center">
+    <img width=100% src="logo.png">
+  </a>
+</p>
+<p align="center"> 🤖 LLM Disassembler ⚔️ </p>
+
 
 Welcome to **Oversight**! This tool allows reverse engineering and in-depth analysis of large language models (LLMs). Oversight provides a suite of utilities to inspect LLMs for vulnerabilities and behavioral patterns, enabling adversarial testing, prompt fuzzing, response evasion, and more. Designed for researchers, developers, and enthusiasts, Oversight is modular and extensible via plugins.
 
