@@ -38,30 +38,54 @@ app.config['session_state'] = session_state  # Add this line
 def load_plugins(app, session_state):
     plugin_folder = Config.PLUGIN_FOLDER
     print("Loading plugins from:", plugin_folder)
+
+    # Ensure the plugin folder is in the system path for dynamic import
+    if plugin_folder not in sys.path:
+        sys.path.insert(0, plugin_folder)
+
     plugins_with_priority = []
-    base_module = plugin_folder
+
+    # Iterate through each folder in the plugin root directory
     for root, dirs, files in os.walk(plugin_folder):
-        for file in files:
-            if file.endswith(".py"):
-                rel_path = os.path.relpath(os.path.join(root, file), plugin_folder)
-                module_name = os.path.splitext(rel_path)[0].replace(os.sep, '.')
-                full_module_name = f"{base_module}.{module_name}"
-                print("Loading plugin:", full_module_name)
-                module = importlib.import_module(full_module_name)
+        for dir_name in dirs:
+            module_path = os.path.join(root, dir_name)
+
+            # Find any Python file in the directory
+            python_files = [f for f in os.listdir(module_path) if f.endswith(".py")]
+            if python_files:
+                main_file = python_files[0]  # Use the first .py file found in the directory
+                module_name = f"{dir_name}.{os.path.splitext(main_file)[0]}"
+                file_path = os.path.join(module_path, main_file)
+
+                # Check if the file contains a valid plugin class (inherits from PluginBase)
+                spec = importlib.util.spec_from_file_location(module_name, file_path)
+                module = importlib.util.module_from_spec(spec)
+                sys.modules[module_name] = module
+                spec.loader.exec_module(module)
+
+                # Check for a valid plugin class before instantiation
+                valid_plugin = False
                 for name, obj in inspect.getmembers(module):
                     if inspect.isclass(obj) and issubclass(obj, PluginBase) and obj is not PluginBase:
+                        valid_plugin = True
                         plugin_instance = obj(app, session_state)
                         plugin_config = session_state.get_plugin_config(plugin_instance.bp.name)
                         if not plugin_config.get("hidden", False):
                             priority = plugin_config.get("priority", float('inf'))
                             plugins_with_priority.append((priority, plugin_instance))
-    # Sort plugins by priority
+                        print(f"Loaded valid plugin: {plugin_instance.bp.name} from {module_name}")
+
+                if not valid_plugin:
+                    print(f"Skipped {module_name}: No valid PluginBase subclass found.")
+
+    # Sort and register plugins by priority
     plugins_with_priority.sort(key=lambda x: x[0])
     plugins = []
     for priority, plugin_instance in plugins_with_priority:
         plugins.append(plugin_instance)
-        app.register_blueprint(plugin_instance.bp)  # Register in priority order
-        print(f"Registered plugin: {plugin_instance.bp.name}, priority: {priority}, template folder: {plugin_instance.template_folder}")
+        app.register_blueprint(plugin_instance.bp)
+        print(f"Registered plugin: {plugin_instance.bp.name}, priority: {priority}")
+
     return plugins
 
 
