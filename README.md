@@ -28,6 +28,13 @@ Welcome to **Oversight**! This tool allows reverse engineering and in-depth anal
   - Transformers
   - Torch
 
+Oversight requires Nvidia CUDA. Follow the steps below:
+- Ensure your Nvidia drivers are up to date: https://www.nvidia.com/en-us/geforce/drivers/
+- Install the appropriate dependancies from here: https://pytorch.org/get-started/locally/
+- Validate CUDA is installed correctly by running the following and being returned a prompt ```python -c "import torch; print(torch.rand(2,3).cuda())"```
+  
+Install the dependencies using:
+
 ### Steps
 
 1. **Clone the Repository**:
@@ -42,10 +49,6 @@ pip install flask transformers torch
 ```
 Configure CUDA: Ensure your system’s CUDA configuration matches your GPU. Install CUDA if you haven't already:
 
-## Check CUDA version
-```
-nvcc --version
-```
 Run the Application: Start the Flask app from the app.py file:
 
 ```
