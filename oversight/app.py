@@ -46,6 +46,7 @@ def load_plugins(app, session_state):
                 rel_path = os.path.relpath(os.path.join(root, file), plugin_folder)
                 module_name = os.path.splitext(rel_path)[0].replace(os.sep, '.')
                 full_module_name = f"{base_module}.{module_name}"
+                print("Loading plugin:", full_module_name)
                 module = importlib.import_module(full_module_name)
                 for name, obj in inspect.getmembers(module):
                     if inspect.isclass(obj) and issubclass(obj, PluginBase) and obj is not PluginBase:
