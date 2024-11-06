@@ -1,3 +1,8 @@
+<div align="center" style="padding: 20px; background-color: #4CAF50; color: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); font-size: 1.2em; font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto;">
+  <p>💡✨ <strong>Contributions Welcome!</strong> ✨💡</p>
+  <p>Merge requests are welcome for new <strong>Oversight</strong> plugin modules!</p>
+</div>
+
 <p align="center">
     <img width=100% src="logo.png">
   </a>
