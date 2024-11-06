@@ -36,7 +36,7 @@ session_state = SessionState(Config.SESSION_STATE_FILE)
 app.config['session_state'] = session_state  # Add this line
 
 def load_plugins(app, session_state):
-    plugin_folder = app.config["PLUGIN_FOLDER"]
+    plugin_folder = Config.PLUGIN_FOLDER
     print("Loading plugins from:", plugin_folder)
     plugins_with_priority = []
     base_module = 'plugins'
