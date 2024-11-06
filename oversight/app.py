@@ -28,7 +28,7 @@ app = Flask(
 )
 app.config.from_object(Config)
 app.secret_key = Config.SECRET_KEY  # Ensure secret key is set
-app.config["PLUGIN_FOLDER"] = os.path.join(app.root_path, "plugins")  # Add this line
+app.config["PLUGIN_FOLDER"] = os.path.join(app.root_path, "plugins")
 
 # Reset the session state JSON if the debug flag is set
 if app.config['DEBUG']:
