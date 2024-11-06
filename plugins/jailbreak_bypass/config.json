@@ -1,9 +1,0 @@
-{
-    "name": "Jailbreak Bypass Analysis",
-    "size": "medium",
-    "data": "A module for analyzing jailbreak bypass techniques in LLMs",
-    "hidden": false,
-    "loader": "HuggingFaceLoader",
-    "priority": 0,
-    "icon": "lock_open"
-}

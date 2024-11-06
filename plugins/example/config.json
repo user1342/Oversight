@@ -1,9 +1,0 @@
-{
-    "name": "Example",
-    "size": "small",
-    "data": "An example plugin",
-    "hidden":true,
-    "loader":"HuggingFaceLoader",
-    "priority": 1,
-    "icon":"display_settings"
-}

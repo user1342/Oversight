@@ -1,9 +1,0 @@
-{
-    "name": "Attention Maps Graph",
-    "size": "medium",
-    "data": "A module for showing the layers of an LLM",
-    "hidden":false,
-    "loader":"HuggingFaceLoader",
-    "priority": 2,
-    "icon":"analytics"
-}

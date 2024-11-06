@@ -1,9 +1,0 @@
-{
-    "name": "Prompt Injection Testing",
-    "size": "medium",
-    "data": "A module for testing prompt injection vulnerabilities in LLMs",
-    "hidden": false,
-    "loader": "HuggingFaceLoader",
-    "priority": 0,
-    "icon": "security"
-}
