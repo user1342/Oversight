@@ -39,13 +39,12 @@ def load_plugins(app, session_state):
     plugin_folder = Config.PLUGIN_FOLDER
     print("Loading plugins from:", plugin_folder)
     plugins_with_priority = []
-    base_module = 'plugins'
     for root, dirs, files in os.walk(plugin_folder):
         for file in files:
             if file.endswith(".py"):
                 rel_path = os.path.relpath(os.path.join(root, file), plugin_folder)
                 module_name = os.path.splitext(rel_path)[0].replace(os.sep, '.')
-                full_module_name = f"{base_module}.{module_name}"
+                full_module_name = f"{module_name}"
                 print("Loading plugin:", full_module_name)
                 module = importlib.import_module(full_module_name)
                 for name, obj in inspect.getmembers(module):
