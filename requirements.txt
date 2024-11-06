@@ -1,9 +1,7 @@
-PyMuPDF
 transformers
 datasets
 langchain 
 sentence-transformers
-fpdf
 setuptools
 huggingface_hub
 numpy
@@ -16,7 +14,7 @@ accelerate>=0.16.0,<1
 transformers[torch]>=4.28.1
 torch>=1.13.1
 sentencepiece 
-PyPDF2
+flask
 scikit-learn
 typing-extensions
 pydantic
