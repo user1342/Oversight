@@ -14,7 +14,7 @@ Welcome to **Oversight**! This tool allows reverse engineering and in-depth anal
 - **Detailed Reports**: Generate and download comprehensive reports.
 
 <p align="center">
-    <img width=50% src="demo.gif">
+    <img width=100% src="demo.gif">
   </a>
 </p>
 
