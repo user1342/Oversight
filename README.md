@@ -34,7 +34,7 @@ Oversight requires Nvidia CUDA. Follow the steps below:
 
 ```
 pip install git+https://github.com/user1342/oversight.git
-oversight
+./oversight
 ```
 Running Oversight will automatically start the Oversight server and launch it on localhost (```http://127.0.0.1:5000```) in your default browser.
 
