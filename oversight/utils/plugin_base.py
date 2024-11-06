@@ -4,6 +4,7 @@ import os
 import json 
 from flask import jsonify, current_app, render_template, request
 import oversight.utils.loader_runner as loader_runner
+import sys 
 
 class PluginBase:
     def __init__(self, app, session_state, name, import_name, url_prefix, template_folder='templates'):
