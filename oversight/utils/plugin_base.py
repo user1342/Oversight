@@ -63,11 +63,14 @@ class PluginBase:
         return loader_runner.run_loader(loader_name=loader_name, *args, **kwargs)
 
     def _get_config(self):
-        # Use the inheriting class's file path instead of the base class's path
-        config_path = os.path.join(os.path.dirname(self.__class__.__module__.replace('.', os.sep)), 'config.json')
+        # Get the absolute path of the current plugin's directory
+        plugin_dir = os.path.dirname(sys.modules[self.__class__.__module__].__file__)
+        config_path = os.path.join(plugin_dir, 'config.json')
+
         if not os.path.exists(config_path):
             raise FileNotFoundError(f"No config found at {config_path} for plugin {self.__class__.__name__}")
         
+        # Load the config JSON file
         with open(config_path, 'r') as config_file:
             config = json.load(config_file)
             return config
