@@ -6,14 +6,11 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'flask',
-        'transformers',
-        'torch',
-        # Add other dependencies here
+        req.strip() for req in open('requirements.txt').readlines()
     ],
     entry_points={
         'console_scripts': [
-            'oversight=oversight.app:main',
+            'oversight=oversight.app:main',  # Update this line to the correct module path
         ],
     },
 )

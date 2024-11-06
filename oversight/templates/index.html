@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> <!-- Include Roboto font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Include Material Icons -->
+    <title>Oversight</title>
+</head>
+<body>
+    <header class="app-banner">
+        <div class="banner-content">
+            <h1 class="app-title">
+                <i class="material-icons">insights</i>
+                <span class="gradient-text">OVERSIGHT</span>
+            </h1>
+            <div class="nav-container">
+                <button class="dropdown-button" id="sectionDropdown">
+                    <span class="button-text">Section Navigation</span>
+                    <i class="material-icons">expand_more</i>
+                </button>
+                <div class="dropdown-content" id="sectionList">
+                    {% for subheading, plugin_cards in plugins_by_subheading %}
+                        <a href="#section-{{ subheading|replace(' ', '-')|lower }}" class="dropdown-item">{{ subheading }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <p class="app-subtitle">LLM Reverse Engineering</p>
+        </div>
+    </header>
+    <div class="container">
+        {% for subheading, plugin_cards in plugins_by_subheading %}
+            <div class="section-container" id="section-{{ subheading|replace(' ', '-')|lower }}">
+                <h2 class="subheading">{{ subheading }}</h2>
+                <div class="card-container">
+                    {% for card in plugin_cards %}
+                        <div class="card {{ card.size }}">
+                            <!-- Material banner that is always visible -->
+                            <div class="material-banner">
+                                <i class="material-icons plugin-icon" title="{{ card.data }}">{{ card.config.icon }}</i>
+                                <span class="banner-text">{{ card.config.name or card.name }}</span>
+                            </div>
+                            <!-- Use the blueprint name and route function name to build the correct URL -->
+                            <div class="iframe-container">
+                                <iframe src="{{ url_for(card.endpoint) }}"></iframe>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        {% if plugins_without_subheading %}
+            <hr class="page-break">
+            <div class="card-container">
+                {% for card in plugins_without_subheading %}
+                    <div class="card {{ card.size }}">
+                        <!-- Material banner that is always visible -->
+                        <div class="material-banner">
+                            <i class="material-icons plugin-icon" title="{{ card.data }}">{{ card.config.icon }}</i>
+                            <span class="banner-text">{{ card.config.name or card.name }}</span>
+                        </div>
+                        <!-- Use the blueprint name and route function name to build the correct URL -->
+                        <div class="iframe-container">
+                            <iframe src="{{ url_for(card.endpoint) }}"></iframe>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Modal Dialog for 'Download Plugin' -->
+    <div id="download-plugin-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="material-icons">close</i>
+            </button>
+            <h2>Download Model</h2>
+            <p>Please enter the Hugging Face LLM path for download.</p>
+            <input type="text" id="llm-path-input" placeholder="e.g., unsloth/Llama-3.1-Storm-8B-bnb-4bit">
+            <button id="download-plugin-btn">Download Model</button>
+            <!-- Spinner element -->
+            <div id="loading-spinner" class="spinner" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons (FAB) -->
+    <div class="fab-container">
+        <div class="fab" id="reset-state-btn">
+            <i class="material-icons">refresh</i>
+        </div>
+        <div class="fab" id="download-report-btn">
+            <i class="material-icons">download</i>
+        </div>
+    </div>
+
+    <!-- Report Name Modal Dialog -->
+    <div id="report-name-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeReportModal()">
+                <i class="material-icons">close</i>
+            </button>
+            <h2>Download Report</h2>
+            <p>Please enter a name for the report.</p>
+            <input type="text" id="report-name-input" placeholder="report_name">
+            <button id="save-report-btn">Save Report</button>
+            <!-- Add spinner -->
+            <div id="report-spinner" class="spinner" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='material.js') }}"></script>
+    <script>
+        function closeModal() {
+            document.getElementById('download-plugin-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

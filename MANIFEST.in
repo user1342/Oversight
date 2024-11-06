@@ -1,0 +1,2 @@
+recursive-include oversight/templates *
+recursive-include oversight/static *
