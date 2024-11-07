@@ -45,7 +45,7 @@ pip install git+https://github.com/user1342/oversight.git
 git clone https://github.com/user1342/Oversight-Loaders.git
 $env:OVERSIGHT_LOADER_FOLDER = <path>/Oversight-Loaders
 or
-export or export OVERSIGHT_LOADER_FOLDER=<path>/Oversight-Loaders or export
+export OVERSIGHT_LOADER_FOLDER=<path>/Oversight-Loaders
 
 git clone https://github.com/user1342/Oversight-Plugins.git
 $env:OVERSIGHT_PLUGIN_FOLDER = <path>/Oversight-Plugins
