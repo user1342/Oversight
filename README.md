@@ -59,7 +59,7 @@ Running Oversight will automatically start the Oversight server and launch it on
 For custom plugins and loaders, either set a custom plugin/ loder path in the Oversight ```config.py``` file, or in your downloaded Oversight plugins/ Loaders folder add your new plugins. 
 
 # 🧩Creating Your Own Plugin 
-Creating a plugin in Oversight is straightforward. For an example plugin look at the [example plugin](https://github.com/user1342/Oversight/tree/main/plugins/example) provided. Follow these steps to add your custom plugin:
+Creating a plugin in Oversight is straightforward. For an example plugin look at the [example plugin](https://github.com/user1342/Oversight-Plugins/tree/main/example) provided. Follow these steps to add your custom plugin:
 
 ## Step 1: Create a New Plugin File
 Navigate to the plugins directory and create a new folder for your plugin. Inside this folder, create a Python file (e.g., my_plugin.py).
