@@ -192,7 +192,7 @@ Oversight is an open-source project and welcomes contributions from the communit
 - Once your changes have been reviewed and approved, they will be merged into the main repository.
 
 # ⚖️ Code of Conduct
-Oversight follows the Contributor Covenant Code of Conduct. Please make sure to review and adhere to this code of conduct when contributing to LCA.
+Oversight follows the Contributor Covenant Code of Conduct. Please make sure to review and adhere to this code of conduct when contributing to Oversight.
 
 # 🐛 Bug Reports and Feature Requests
 If you encounter a bug or have a suggestion for a new feature, please open an issue in the GitHub repository. Please provide as much detail as possible, including steps to reproduce the issue or a clear description of the proposed feature. Your feedback is valuable and will help improve Oversight for everyone.
